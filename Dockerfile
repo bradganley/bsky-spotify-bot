@@ -18,18 +18,11 @@ RUN cd /temp/prod && bun install --frozen-lockfile --production
 FROM install AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
-
-# [optional] tests & build
-ENV NODE_ENV=production
-RUN bun test
-RUN bun run build
-
-# copy production dependencies and source code into final image
-FROM base AS release
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /usr/src/app/build/index.ts .
-COPY --from=prerelease /usr/src/app/package.json .
-
+USER root
+RUN mkdir -p /state
+RUN touch /state/processed_entries.txt
+RUN chmod -R 777 /state
 # run the app
 USER bun
-ENTRYPOINT [ "bun", "run", "index.ts" ]
+RUN pwd
+ENTRYPOINT [ "bun", "run", "src/index.ts" ]

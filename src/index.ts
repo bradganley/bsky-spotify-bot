@@ -16,7 +16,7 @@ if (!BSKY_HANDLE || !BSKY_APP_PASS || !RSS_FEED_URL || !CHECK_INTERVAL) {
   throw new Error("You forgot something.");
 }
 
-const PROCESSED_ENTRIES_FILE = 'state/processed_entries.txt';
+const PROCESSED_ENTRIES_FILE = '/state/processed_entries.txt';
 if (!fs.existsSync(PROCESSED_ENTRIES_FILE)) {
   fs.writeFileSync(PROCESSED_ENTRIES_FILE, '');
 }

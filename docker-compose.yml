@@ -1,0 +1,8 @@
+services:
+  spotibot:
+    image: bradganley/bskyspotibot:0.1.0
+    restart: unless-stopped
+    volumes:
+      - ./state0/:/usr/src/app/state/
+    env_file:
+      - .env
