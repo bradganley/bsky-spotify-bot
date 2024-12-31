@@ -8,7 +8,8 @@ const {
   BSKY_HANDLE,      
   BSKY_APP_PASS,    
   RSS_FEED_URL,     
-  CHECK_INTERVAL,   
+  CHECK_INTERVAL,
+  TAGS   
 } = process.env;
 
 if (!BSKY_HANDLE || !BSKY_APP_PASS || !RSS_FEED_URL || !CHECK_INTERVAL) {
@@ -63,7 +64,7 @@ async function checkItems() {
     // Give it a shot, dingus
     try {
       await bskyAgent.post({
-        text: `${title} by ${author}\n${entryUrl}`,
+        text: `${title} by ${author}\n${TAGS}`,
           embed: {
             $type: 'app.bsky.embed.external',
             external: {
