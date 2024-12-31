@@ -7,5 +7,10 @@
   },
   "peerDependencies": {
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.13.23",
+    "dotenv": "^16.4.7",
+    "rss-parser": "^3.13.0"
   }
 }
