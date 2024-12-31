@@ -1,4 +1,5 @@
-import 'dotenv/config';           
+import 'dotenv/config'; 
+import axios from 'axios';          
 import fs from 'fs';
 import Parser from 'rss-parser';
 import { AtpAgent } from '@atproto/api';
@@ -14,7 +15,10 @@ if (!BSKY_HANDLE || !BSKY_APP_PASS || !RSS_FEED_URL || !CHECK_INTERVAL) {
   throw new Error("You forgot something.");
 }
 
-const PROCESSED_ENTRIES_FILE = '/state/processed_entries.txt'; 
+const PROCESSED_ENTRIES_FILE = 'state/processed_entries.txt';
+if (!fs.existsSync(PROCESSED_ENTRIES_FILE)) {
+  fs.writeFileSync(PROCESSED_ENTRIES_FILE, '');
+}
 
 const bskyAgent = new AtpAgent({ service: 'https://bsky.social' });
 
@@ -65,7 +69,16 @@ async function checkItems() {
             external: {
               uri: entryUrl,
               title: title,
-              description: author
+              description: author,
+              thumb: (await bskyAgent.uploadBlob(
+                Buffer.from(
+                  (await axios.get(
+                    entry.content.match(/<img[^>]+src="([^"]+)"/)?.[1] ?? '',
+                    { responseType: 'arraybuffer' }
+                  )).data
+                ),
+                { encoding: 'image/jpeg' }
+              )).data.blob
             }
           }
       });
