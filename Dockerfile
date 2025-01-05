@@ -22,6 +22,7 @@ USER root
 RUN mkdir -p /state
 RUN touch /state/processed_entries.txt
 RUN chmod -R 777 /state
+VOLUME /state
 # run the app
 USER bun
 RUN pwd

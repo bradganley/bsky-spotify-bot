@@ -72,12 +72,10 @@ async function checkItems() {
               title: title,
               description: author,
               thumb: (await bskyAgent.uploadBlob(
-                Buffer.from(
                   (await axios.get(
                     entry.content.match(/<img[^>]+src="([^"]+)"/)?.[1] ?? '',
                     { responseType: 'arraybuffer' }
-                  )).data
-                ),
+                  )).data,
                 { encoding: 'image/jpeg' }
               )).data.blob
             }

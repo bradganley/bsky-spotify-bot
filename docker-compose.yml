@@ -1,6 +1,7 @@
 services:
   spotibot:
-    image: bradganley/bskyspotibot:latest
+    #image: bradganley/bskyspotibot:latest
+    build: .
     restart: unless-stopped
     volumes:
       - ./state:/state
