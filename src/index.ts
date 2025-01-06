@@ -25,7 +25,7 @@ const bskyAgent = new AtpAgent({ service: 'https://bsky.social' });
 
 async function loginToBluesky() {
   // login 
-  await bskyAgent.login({ identifier: BSKY_HANDLE, password: BSKY_APP_PASS });
+  await bskyAgent.login({ identifier: BSKY_HANDLE!, password: BSKY_APP_PASS! });
   console.log(`Logged as ${BSKY_HANDLE}. God help us.`);
 }
 
